@@ -1,17 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class ValidationController extends GetxController {
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  late TextEditingController emailController, passwordController;
+  final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
+  late TextEditingController emailController,
+      passwordController,
+      firstNameController,
+      lastNameController,
+      phoneController;
   var email = '';
+  var signupEmail = '';
   var password = '';
+  var signuppassword = '';
+  var firstName = '';
+  var lastName = '';
+  var phone = '';
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
@@ -31,6 +44,27 @@ class HomeController extends GetxController {
   validateEmail(String value) {
     if (!GetUtils.isEmail(value)) {
       return 'Provide valid Email';
+    }
+    return null;
+  }
+
+  validateFirstname(String value) {
+    if (value.length < 4) {
+      return 'invalid name';
+    }
+    return null;
+  }
+
+  validateLaststname(String value) {
+    if (value.length < 4) {
+      return 'invalid name';
+    }
+    return null;
+  }
+
+  validatePhone(String value) {
+    if (!GetUtils.isPhoneNumber(value)) {
+      return 'Provide valid Phone Number';
     }
     return null;
   }
@@ -58,5 +92,13 @@ class HomeController extends GetxController {
       return;
     }
     loginFormKey.currentState!.save();
+  }
+
+  void signUp() {
+    final isValid = signUpFormKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    signUpFormKey.currentState!.save();
   }
 }

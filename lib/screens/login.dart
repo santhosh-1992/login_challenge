@@ -1,6 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:login_challenge/controllers/home_controller.dart';
+import 'package:login_challenge/controllers/validation_controller.dart';
 import 'package:login_challenge/utils/from_constant_widget.dart';
 
 class Login extends StatefulWidget {
@@ -12,7 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final controller = Get.put(HomeController());
+  final controller = Get.put(ValidationController());
   doLogin() => {controller.checkLogin()};
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,7 @@ class _LoginState extends State<Login> {
                   },
                   autofocus: false,
                   keyboardType: TextInputType.emailAddress,
-                  decoration:
-                      formInputDecoration('Username or Email', Icons.email),
+                  decoration: formInputDecoration('Email', Icons.email),
                 ),
                 SizedBox(
                   height: 20,
@@ -61,7 +61,30 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 50,
                 ),
-                formButton('Login', doLogin)
+                formButton('Login', doLogin),
+                SizedBox(
+                  height: 10,
+                ),
+                RichText(
+                  text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: "Sign Up",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w800,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Get.toNamed("/signup");
+                            },
+                        ),
+                      ]),
+                )
               ],
             ),
           ),
